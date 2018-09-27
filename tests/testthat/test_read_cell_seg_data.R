@@ -168,4 +168,10 @@ test_that('Making tags works', {
 
   names = rep("Set12_20-6plex_[14146,53503].im3", 3)
   expect_equal(remove_common_prefix(names), names)
+
+  names = c(rep("Set12_20-6plex_[14146,53503].im3", 3), NA)
+  expect_equal(remove_common_prefix(names), names)
+
+  names = c(paste0("Set1_", expected), NA)
+  expect_equal(remove_common_prefix(names), c(expected, NA))
 })

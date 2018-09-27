@@ -91,7 +91,7 @@ read_cell_seg_data <- function(
   # Sample.Name column and insert it as the first column
   # Use the 'tag' column when you need a short name for the sample,
   # e.g. in chart legends
-  if (length(unique(df[[sample_name]])) > 1 && !('tag' %in% names(df))) {
+  if (length(unique(df[[sample_name]][!is.na(df[[sample_name]])])) > 1 && !('tag' %in% names(df))) {
     tag <- as.factor(remove_extensions(remove_common_prefix(df[[sample_name]])))
     df <- cbind(tag, df)
   }
@@ -183,8 +183,8 @@ get_density_columns = function(df) {
 # Remove the common prefix from a vector of strings
 remove_common_prefix <- function(x) {
   # Lexicographic min and max
-  .min <- min(x)
-  .max <- max(x)
+  .min <- min(x, na.rm = TRUE)
+  .max <- max(x, na.rm = TRUE)
   if (.min == .max) return (x)  # All strings are the same
 
   # Find the first difference by comparing characters
